@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title right</title>
+    <link rel="stylesheet" href="/static/layuicms/layui/css/layui.css" media="all" />
+</head>
+<body>
+<script type="text/javascript" src="/static/layuicms/layui/layui.js"></script>
+
+<!--搜索框 开始-->
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>查询条件</legend>
+</fieldset>
+<form  class="layui-form" >
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">菜单名</label>
+            <div class="layui-input-inline" >
+                <input type="text" id="serarchMenuName" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+            <a class="layui-btn layui-icon layui-icon-search" lay-submit="" lay-filter="doSearch" id="doSearch">搜索</a>
+        </div>
+    </div>
+</form>
+<!--搜索框 结束-->
+
+<!--表格 开始-->
+<table id="demo" lay-filter="demoTable"> </table>
+
+<!--头部工具条-->
+<div style="display: none" id="myToolBar">
+    <button type="button" class="layui-btn layui-btn-sm" lay-event="headToolAdd">增加</button>
+    <button type="button" class="layui-btn layui-btn-sm" lay-event="headToolBetchDel">批量删除</button>
+</div>
+
+<!--行中工具条-->
+<div style="display: none" id="myTableToolBar">
+    <button type="button" class="layui-btn layui-btn-sm" lay-event="rowToolDetail">查看</button>
+    <button type="button" class="layui-btn layui-btn-sm" lay-event="rowToolEdit">编辑</button>
+    <button type="button" class="layui-btn layui-btn-sm" lay-event="rowToolDelete">删除</button>
+</div>
+<!--表格 结束-->
+
+<!--编辑/新增 弹出层-->
+<div style="display: none;" id="addOrEdit" >
+    <form method="post" class="layui-form"  lay-filter="addFilter" id="addOrEditForm" style="padding-top: 10px;" >
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <input type="text" name="id" placeholder="这是隐藏的,编辑时存放主键的" style="display: none;" class="layui-input">
+
+                <label class="layui-form-label">父菜单名</label>
+                <div class="layui-input-block">
+                    <select name="pid" lay-filter="menuSelect" id="menuSelect">
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">菜单名</label>
+                <div class="layui-input-inline" >
+                    <input type="text" name="title"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">href</label>
+                <div class="layui-input-inline" >
+                    <input type="text" name="href"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">target</label>
+                <div class="layui-input-inline" >
+                    <input type="text" name="target"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">图标</label>
+                <div class="layui-input-inline" >
+                    <input type="text" name="icon" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">是否展开</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="spread" value="1" title="展开">
+                    <input type="radio" name="spread" value="0" title="不展开" checked>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">是否可用</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="available" value="1" title="可用">
+                    <input type="radio" name="available" value="0" title="不可用" checked>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="layui-form-item" style="text-align: center">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn layui-icon layui-icon-search" lay-submit="" lay-filter="doSubmit">提交</button>
+                <button type="reset" class="layui-btn  layui-icon layui-icon-refresh">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+<div style="display: none;" id="Edit" >
+    <form method="post" class="layui-form"  lay-filter="EditFilter" id="EditForm" style="padding-top: 10px;" >
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">父菜单名111</label>
+
+                <div class="layui-input-block">
+                    <select name="pid" lay-filter="menuSelectEdit" id="menuSelectEdit">
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">菜单名111</label>
+                <div class="layui-input-inline" >
+                    <input type="text" name="title"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">href1</label>
+                <div class="layui-input-inline" >
+                    <input type="text" name="href"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">target</label>
+                <div class="layui-input-inline" >
+                    <input type="text" name="target"  autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">图标</label>
+                <div class="layui-input-inline" >
+                    <input type="text" name="icon" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">是否展开</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="spread" value="1" title="展开">
+                    <input type="radio" name="spread" value="0" title="不展开" checked>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">是否可用</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="available" value="1" title="可用">
+                    <input type="radio" name="available" value="0" title="不可用" checked>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="layui-form-item" style="text-align: center">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn layui-icon layui-icon-search" lay-submit="" lay-filter="doSubmitEdit">提交</button>
+                <button type="reset" class="layui-btn  layui-icon layui-icon-refresh">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+<script>
+
+    var tableIns;
+
+    layui.use(["layer","form","table","laydate"],function () {
+        var layer = layui.layer;
+        var $ = layui.$;
+        var form = layui.form;
+        var table = layui.table;
+        var laydate = layui.laydate;
+
+
+        tableIns = table.render({
+            elem: '#demo',  // 绑定的表格元素
+            url: '/menu/loadall', //数据接口,数据接口要实现分页的功能
+            toolbar:"#myToolBar",
+            page: true, //开启分页
+            limit:20,
+            totalRow: true,
+            cols: [[ //表头
+                {type:"checkbox", fixed:"left"},
+                {field: 'id', title: 'id', align:"center"   ,sort: true, fixed: 'left', width:80}
+                ,{field: 'parentId', title: '父节点id' , align:"center" }
+                ,{field: 'title', title: '菜单名',sort: true, align:"center"  }
+                ,{field: 'href', title: '超链接',sort: true,  align:"center" }
+                ,{field: 'icon', title: '图标', align:"center", templet:function (d) {
+                        return  "<div class=\"layui-icon\">" + d.icon + "</div>"
+                    }}
+                ,{field: 'spread', title: '是否展开', align:"center" , templet:function (d) {
+                        return d.spread == 1 ? "<span style='color:red; '>展开</span>":"<span style='color:red; '>不展开</span>"
+                    } }
+                ,{field: 'available', title: '是否可用',  align:"center" ,templet:function (d) {
+                        return d.available == 1 ? "<span style='color:red; '>可用</span>":"<span style='color:red; '>不可用</span>"
+                    }
+                }
+                ,{title:"操作",fixed:"right",toolbar: "#myTableToolBar",width: 200}
+            ]]
+        });
+
+        // 搜索功能
+        $("#doSearch").click(function () {
+            var searchName = $("#serarchMenuName").val()
+            if (searchName.length <=0) {
+                return
+            }
+            console.log("searchName:"+searchName)
+            table.reload("demo", {
+                url: "/menu/loadall?serarchMenuName="+searchName,
+            })
+        })
+
+        var url = ""; // 后台编辑功能的url  和  后台新增功能的url => 其实可以用一个url，如果请求参数中带id说明是"编辑"，否则是"新增"
+        var index;  // 记录当前的弹窗的index
+
+        // 头部工具条 事件
+        table.on('toolbar(demoTable)', function(obj){
+            switch(obj.event){
+                case 'headToolAdd':
+                    layer.msg('增加');
+
+                    initMenuSelect()
+                    index = layer.open({
+                        type: 1,
+                        title: "菜单新增",
+                        content: $("#addOrEdit"),
+                        area:["400px", "450px"],// 宽，高
+                        success:function (index) {
+                            // $("#addOrEdit")[0].reset(); // error，addOrEdit是一个div，不是表单
+                            $("#addOrEditForm")[0].reset(); // 清空表单数据
+                        }
+                    })
+                    url = "/menu/add"
+                    break;
+            };
+        });
+
+        //监听行 中的  工具条事件
+        table.on('tool(demoTable)', function(obj){ //注：tool 是工具条事件名，demoTable 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+
+            if(layEvent === 'rowToolDetail'){ //查看
+                //TODO：do somehing
+                layer.msg("查看详情，可以使用layer.open打开一个含有表单内容的弹出框")
+            } else if(layEvent === 'rowToolDelete'){ //删除
+                layer.confirm('真的删除行么', function(index){
+                    layer.msg("删除成功")
+                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                    layer.close(index);
+                    // 检查是否有子节点
+                    //TODO:向服务端发送删除请求
+                    // 更新左边的菜单树：window.parent.myleft.reloadMenuTree()
+                });
+            } else if(layEvent === 'rowToolEdit'){ //编辑
+                edit(data)
+            }
+        });
+
+        // 我给跪下了。因为第二步弹框 依赖ajax的数据，所以把必须弹框放在ajax的success回调里写
+        // 通过打印日志才发现是 先弹框后ajax，后来将ajax设置成同步也没有用。跪了。最后使用了这种办法。
+        function edit(curRowData){
+
+            $("#menuSelect").html("") // 清空select下的所有options
+            var menuSelect = $("#menuSelect") //
+            //1.生成select框
+            $.ajax({
+                url:'/menu/getsecondmenu',
+                success:function(res){
+                    console.log("success initMenuSelect")
+                    const resObj = JSON.parse(res)  // res是字符串,要将res转为 对象. console.log(typeof res)
+
+                    $.each(resObj.data ,function (i,item) {
+                        // console.log("数据 ：" + item)
+                        title = item.title;
+                        id =  item.id;
+                        menuSelect.append("<option value="+id + " >"+title+"</option>");
+                    })
+                    console.log("init suscess end")
+                    form.render("select", "addFilter"); // 重新渲染addFilter下的 select框
+
+                    // 2。弹编辑框
+                    index = layer.open({
+                        type: 1,
+                        title: "菜单编辑",
+                        // content: $("#Edit"),
+                        content: $("#addOrEdit"),
+                        area:["400px", "450px"],// 宽，高
+                        success:function (index) {
+                            // 已经获取到当前行的数据了，然后设置表单的初始值
+                            console.log(curRowData)
+                            curRowData.pid = curRowData.parentId // 数据的字段是pid
+                            form.val("addFilter",curRowData) //
+                            form.render("select", "addFilter"); //
+                            console.log("edit end ")
+                        }
+                    })
+                },
+                error:function(status){
+                    //失败后执行的代码
+                    console.log("error")
+                }
+            });
+
+            url = "/menu/edit"
+        }
+
+        // 编辑/新增的 弹出层下的 提交
+        form.on('submit(doSubmit)', function(data){
+            // console.log(data.field) // 等价于$("#addOrEditForm").serialize();
+            var params =  $("#addOrEditForm").serialize();
+            console.log("addOrEdit, params:")
+            console.log(params)
+            $.ajax({
+                url:url,
+                type:'POST',
+                dataType:'json',
+                data:params,
+                success:function(res){
+                    console.log(res)
+                },
+                error:function(status){
+                    //失败后执行的代码
+                }
+            });
+            //关闭弹框
+            layer.close(index)
+            //重新加载表格
+            table.reload('demo', {
+                url: '/menu/loadall', //数据接口
+            });
+            // 刷新左边的菜单树
+            window.parent.myleft.reloadMenuTree()
+        });
+
+        function initMenuSelect() {
+            $("#menuSelect").html("") // 清空select下的所有options
+            var menuSelect = $("#menuSelect") //
+
+            //调用ajax函数
+            $.ajax({
+                url:'/menu/getsecondmenu',
+                // type:'POST',
+                // dataType:'json',
+                // data:{
+                //     name:"马各马它",
+                //     age:18
+                // },
+                asycn:false,
+                success:function(res){
+                    console.log("success initMenuSelect")
+                    const resObj = JSON.parse(res)  // res是字符串,要将res转为 对象. console.log(typeof res)
+
+                    $.each(resObj.data ,function (i,item) {
+                        // console.log("数据 ：" + item)
+                        title = item.title;
+                        id =  item.id;
+
+                        menuSelect.append("<option value="+id + " >"+title+"</option>");
+
+                        // alert(menuSelect.html())
+                    })
+                     console.log("init suscess end")
+                    form.render("select", "addFilter"); // 重新渲染addFilter下的 select框
+
+                },
+                error:function(status){
+                    //失败后执行的代码
+                    console.log("error")
+                }
+            });
+        }
+
+        // function initMenuSelectEdit() {
+        //     $("#menuSelectEdit").html("") // 清空select下的所有options
+        //     var menuSelectEdit = $("#menuSelectEdit") //menuSelect
+        //     console.log(menuSelectEdit)
+        //     //调用ajax函数
+        //     $.ajax({
+        //         url:'/menu/getsecondmenu',
+        //         // type:'POST',
+        //         // dataType:'json',
+        //         // data:{
+        //         //     name:"马各马它",
+        //         //     age:18
+        //         // },
+        //         success:function(res){
+        //             // console.log(typeof res)
+        //             // console.log(res)
+        //             console.log("success initMenuSelectEdit")
+        //             const resObj = JSON.parse(res)  // res是字符串,要将res转为 对象
+        //
+        //             $.each(resObj.data ,function (i,item) {
+        //                 // console.log("索引 ：" + i)
+        //                 // console.log("数据 ：" + item)
+        //                 title = item.title;
+        //                 id =  item.id;
+        //                 menuSelectEdit.append("<option value="+id + " >"+title+"</option>");
+        //                  // alert(menuSelectEdit.html())
+        //             })
+        //             // success回调是异步的，所以应该是放在这里等数据都append进去后,再渲染
+        //             form.render("select", "EditFilter"); // 重新渲染 EditFilter 下的 select框
+        //         },
+        //         error:function(status){
+        //             //失败后执行的代码
+        //             console.log("error")
+        //         }
+        //     });
+        //     //当有多个form时, 第二个参数是指定渲染哪个form
+        //     // form.render("select", "EditFilter");
+        // }
+    })
+
+    // frame重新加载，被其他frame调用
+
+    function reloadTable(id) {
+        // 清空搜索框的内容
+        // '$'只有lay.use模块中使用。如果想在这里使用，必须单独引入js模块
+        $("#serarchMenuName").val("")
+
+        tableIns.reload({
+            url:"/menu/loadall?menu_id="+id,
+        })
+    }
+
+</script>
+
+</body>
+</html>

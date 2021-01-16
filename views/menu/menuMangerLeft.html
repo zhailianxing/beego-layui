@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>菜单管理左侧</title>
+    <!--通过查看浏览器的404报错，发现是： /menu/static/layuicms/layui/css/layui.css， 即"menu"作为当前路径了-->
+    {{/*<link rel="stylesheet" href="static/layuicms/layui/css/layui.css">*/}}
+
+    <link rel="stylesheet" href="/static/layuicms/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/layuicms/layui_ext/dtree/dtree.css">
+    <link rel="stylesheet" href="/static/layuicms/layui_ext/dtree/font/dtreefont.css">
+
+</head>
+
+
+<body>
+
+<ul id="treeTree" class="dtree" data-id="0"></ul>
+
+</body>
+
+
+<script type="text/javascript" src="/static/layuicms/layui/layui.js"></script>
+<script>
+    var menuTree;
+    // dtree文档参考：http://www.wisdomelon.com/DTreeHelper/
+    layui.extend({
+        dtree: '/static/layuicms/layui_ext/dtree/dtree'   // {/}的意思即代表采用自有路径，即不跟随 base 路径
+    }).use(['dtree','layer','jquery'], function(){
+        var dtree = layui.dtree, layer = layui.layer, $ = layui.jquery;
+
+        // 初始化树
+        menuTree = dtree.render({
+            elem: "#treeTree",
+            dataFormat: "list",
+            // data: treeTree, // 使用data加载
+            // url: "/static/json/test_dtree2.json", // 使用url加载（可与data加载同时存在）
+            url: "/menu/mangerdtreelist", // 使用url加载（可与data加载同时存在）
+            method: "get"
+        });
+
+        // 绑定节点点击
+        dtree.on("node('treeTree')" ,function(obj){
+            // console.log(obj)
+            // console.log(obj.param.serialize())
+            id = obj.param.nodeId // id 会变成 nodeId
+            // "myright"就是 <frame>里的name
+            window.parent.myright.reloadTable(id)
+
+        });
+    });
+
+    function reloadMenuTree() {
+        menuTree.reload({
+            url:"/menu/mangerdtreelist",
+        })
+    }
+</script>
+
+
+
+
+</html>
+
+
+
+

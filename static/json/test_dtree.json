@@ -1,0 +1,23 @@
+{
+  "status":{"code":200,"message":"操作成功"},
+  "data": [
+    {"id":1,"title": "湖南省","checkArr": "0","parentId": 0,"spread": 0},
+    {"id":2,"title": "湖北省","checkArr": "0","parentId": 0,"spread": 0},
+
+    {"id":3,"title": "广东省","checkArr": "0","parentId": 0},
+    {"id":4,"title": "浙江省","checkArr": "0","parentId": 0},
+    {"id":5,"title": "福建省","checkArr": "0","parentId": 0},
+
+
+    {"id":1001,"title": "长沙市","checkArr": "0","parentId": 1},
+    {"id":1002,"title": "株洲市","checkArr": "0","parentId": 1},
+    {"id":1003,"title": "湘潭市","checkArr": "0","parentId": 1},
+    {"id":1004,"title": "衡阳市","checkArr": "0","parentId": 1},
+    {"id":1005,"title": "郴州市","checkArr": "0","parentId": 1},
+
+
+    {"id":1006,"title": "武汉市","checkArr": "0","parentId": 2},
+    {"id":1007,"title": "黄冈市","checkArr": "0","parentId": 2}
+  ]
+}
+
